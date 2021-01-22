@@ -7,7 +7,6 @@ public class MainApplication {
 
 	public static void main(String[] args) {
 		System.out.println("****** Welcome to Locked Me Application *******");
-		System.out.println("Divya"+" "+"Full Stack Java Developer");
 		System.out.println(" Please select option 1 to list the file names in the root directory ");
 		System.out.println(" Please select option 2 for the following additional Options ");
 		System.out.println(" 	Please select option a for adding a file to the existing directory list ");
@@ -64,15 +63,20 @@ public class MainApplication {
 				case 'd': {
 					scanInputOptions();
 					break;
-					
 				}
 				}
 				break;
 			}
+			
 			case 3: {
 				System.out.println("Exiting the Application ...");
+				System.exit(0);
+				
 				break;
 			}
+			
+			
+			
 			default:
 				throw new IllegalArgumentException("Unexpected value: " + n);
 			}
@@ -81,5 +85,8 @@ public class MainApplication {
 		} catch (InputMismatchException e) {
 			System.out.println("\tInvalid input entered. Please enter the specified input");
 		}
+		scanInputOptions();
 	}
+	
+	
 }
