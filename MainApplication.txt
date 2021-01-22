@@ -1,0 +1,85 @@
+package com.lockers.lockedme;
+
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+public class MainApplication {
+
+	public static void main(String[] args) {
+		System.out.println("****** Welcome to Locked Me Application *******");
+		System.out.println("Divya"+" "+"Full Stack Java Developer");
+		System.out.println(" Please select option 1 to list the file names in the root directory ");
+		System.out.println(" Please select option 2 for the following additional Options ");
+		System.out.println(" 	Please select option a for adding a file to the existing directory list ");
+		System.out.println(" 	Please select option b for deleting a file from the existing directory list ");
+		System.out.println(" 	Please select option c for searching a file from the existing directory list ");
+		System.out.println("    Please select option d to go back to main selection ");
+		System.out.println("Please select option 3 to exit the application");
+		System.out.println("**************Thank You!!!  *********************");
+		System.out.println();
+		scanInputOptions();
+	}
+
+	public static void scanInputOptions() {
+		System.out.println(" Please enter the value 1 or 2 or 3 for selecting options listed above ");
+		// use "try" to catch invalid inputs
+		try {
+			Scanner scanner = new Scanner(System.in);
+			int n = scanner.nextInt();
+			switch (n) {
+			case 1: {
+				FileUtils.readFiles();
+				break;
+			}
+			case 2: {
+				scanner.nextLine();
+				String option = scanner.next();
+				char ch = option.charAt(0);
+				System.out.println("The sub-option entered was: " + ch);
+				switch (ch) {
+				case 'a': {
+					System.out.println("Please enter name of the file to be added ");
+					scanner.nextLine();
+					String fileName = scanner.next();
+					System.out.println("Adding file " + fileName + " to directory path " + FileUtils.ROOT_DIR);
+					FileUtils.addFileToRepo(fileName);
+					break;
+				}
+				case 'b': {
+					System.out.println("Please enter name of the file to be deleted ");
+					scanner.nextLine();
+					String fileName = scanner.next();
+					System.out.println("Deleting file " + fileName + " from directory path " + FileUtils.ROOT_DIR);
+					FileUtils.deleteFileFromRepo(fileName);
+					break;
+				}
+				case 'c': {
+					System.out.println("Please enter name of the file to be searched ");
+					scanner.nextLine();
+					String fileName = scanner.next();
+					System.out.println("Searching file " + fileName + " from directory path " + FileUtils.ROOT_DIR);
+					FileUtils.searchFileFromRepo(fileName);
+					break;
+				}
+				case 'd': {
+					scanInputOptions();
+					break;
+					
+				}
+				}
+				break;
+			}
+			case 3: {
+				System.out.println("Exiting the Application ...");
+				break;
+			}
+			default:
+				throw new IllegalArgumentException("Unexpected value: " + n);
+			}
+			
+			System.out.println("Exiting the Application ...");
+		} catch (InputMismatchException e) {
+			System.out.println("\tInvalid input entered. Please enter the specified input");
+		}
+	}
+}

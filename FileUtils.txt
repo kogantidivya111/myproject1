@@ -1,0 +1,80 @@
+package com.lockers.lockedme;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.DirectoryNotEmptyException;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class FileUtils {
+	public static String ROOT_DIR = "/home/kogantidivya111/Desktop/divya";
+
+	public static void addFileToRepo(String fileToAdd) {
+		File file = new File(ROOT_DIR+ fileToAdd);
+		try {
+			file.createNewFile();
+			Path path = Paths.get(ROOT_DIR, fileToAdd);
+			List<String> strings = Arrays.asList("Line One", "Line Two");
+			Files.write(path, strings, StandardOpenOption.APPEND);
+			System.out.println("File is Added succesfully");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public static void deleteFileFromRepo(String fileToDelete) {
+		Path path = Paths.get(ROOT_DIR, fileToDelete);
+		try {
+			boolean success = Files.deleteIfExists(path);
+			if(success)
+				System.out.println("File is deleted succesfully");
+			else 
+				System.out.println("File is not found or failed to delete");	
+		} catch (NoSuchFileException nfe) {
+			nfe.printStackTrace();
+		} catch (DirectoryNotEmptyException dne) {
+			dne.printStackTrace();
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		}
+	}
+
+	public static void searchFileFromRepo(String fileToSearch) {
+		List<String> files = readFiles();
+
+		if (files.contains(fileToSearch)) {
+			System.out.println("Search for file Successful");
+		} else {
+			System.out.println("No file found");
+		}
+	}
+
+	public static List<String> readFiles() {
+		List<String> fileNames = new ArrayList<>();
+		File file = new File(ROOT_DIR);
+		File[] files = file.listFiles();
+
+		System.out.println(" Number of files " + files.length);
+		for (File dirFile : files) {
+			if (dirFile.isDirectory()) {
+				File[] folderFiles = file.listFiles();
+				for (File subFile : folderFiles) {
+					System.out.println(subFile.getName());
+					fileNames.add(subFile.getName());
+				}
+
+			} else {
+				System.out.println(dirFile.getName());
+				fileNames.add(dirFile.getName());
+			}
+		}
+		return fileNames;
+	}
+}
